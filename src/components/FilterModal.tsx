@@ -1,6 +1,6 @@
 import { X } from 'lucide-react';
 import { useState } from 'react';
-import { Button } from './ui/button';
+import Button from './ui/Button';
 
 interface FilterModalProps {
   isOpen: boolean;
@@ -53,11 +53,11 @@ export default function FilterModal({ isOpen, onClose, onApply, currentFilters }
   return (
     <div className="fixed inset-0 z-50 flex items-end animate-fade-in">
       {/* Backdrop */}
-      <div
+      <div 
         className="absolute inset-0 bg-black/50"
         onClick={onClose}
       />
-
+      
       {/* Modal */}
       <div className="relative w-full bg-white rounded-t-[24px] max-h-[85vh] flex flex-col animate-slide-up">
         {/* Header */}
@@ -65,7 +65,7 @@ export default function FilterModal({ isOpen, onClose, onApply, currentFilters }
           <h2 className="font-['Poppins:SemiBold',sans-serif] text-[18px] text-black">
             Filtrar
           </h2>
-          <button
+          <button 
             onClick={onClose}
             className="p-2 -mr-2"
           >
@@ -124,10 +124,11 @@ export default function FilterModal({ isOpen, onClose, onApply, currentFilters }
                 <button
                   key={category.id}
                   onClick={() => toggleCategory(category.id)}
-                  className={`w-full px-4 py-3 rounded-xl border-2 text-left font-['Poppins:Medium',sans-serif] text-[14px] transition-colors ${filters.categories.includes(category.id)
+                  className={`w-full px-4 py-3 rounded-xl border-2 text-left font-['Poppins:Medium',sans-serif] text-[14px] transition-colors ${
+                    filters.categories.includes(category.id)
                       ? 'bg-[#f72585] border-[#f72585] text-white'
                       : 'bg-white border-[#e9eaeb] text-black'
-                    }`}
+                  }`}
                 >
                   {category.label}
                 </button>
@@ -141,17 +142,18 @@ export default function FilterModal({ isOpen, onClose, onApply, currentFilters }
               onClick={() => setFilters(prev => ({ ...prev, inStock: !prev.inStock }))}
               className="flex items-center gap-3"
             >
-              <div className={`w-5 h-5 rounded border-2 flex items-center justify-center transition-colors ${filters.inStock
+              <div className={`w-5 h-5 rounded border-2 flex items-center justify-center transition-colors ${
+                filters.inStock
                   ? 'bg-[#f72585] border-[#f72585]'
                   : 'bg-white border-[#d5d7da]'
-                }`}>
+              }`}>
                 {filters.inStock && (
                   <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 12 12">
-                    <path
-                      d="M10 3L4.5 8.5L2 6"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
+                    <path 
+                      d="M10 3L4.5 8.5L2 6" 
+                      stroke="currentColor" 
+                      strokeWidth="2" 
+                      strokeLinecap="round" 
                       strokeLinejoin="round"
                     />
                   </svg>

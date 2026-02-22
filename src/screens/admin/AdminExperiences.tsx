@@ -6,19 +6,16 @@ interface AdminExperiencesProps {
   onNavigate: (screen: Screen) => void;
 }
 
-import { useMemo } from 'react';
-import { useApp } from '../../context/AppContext';
-
 export default function AdminExperiences({ onNavigate }: AdminExperiencesProps) {
-  const { experiences, refreshExperiences } = useApp();
-
-  useMemo(() => {
-    refreshExperiences();
-  }, []);
+  const experiences = [
+    { id: '1', name: 'Tour "Del Grano a la Taza"', price: 65000, bookings: 12, status: 'active', image: 'https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=200' },
+    { id: '2', name: 'Cata de Café Especial', price: 45000, bookings: 8, status: 'active', image: 'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=200' },
+    { id: '3', name: 'Taller de Barista', price: 80000, bookings: 3, status: 'active', image: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=200' }
+  ];
 
   return (
     <div className="relative w-full h-full bg-[#f9fafb] flex flex-col">
-
+      
       <div className="bg-white border-b border-[#e9eaeb] px-4 py-4 flex items-center justify-between shadow-sm">
         <h1 className="font-['Poppins:SemiBold',sans-serif] text-[20px] text-[#181d27]">Experiencias</h1>
         <button className="bg-[#f72585] text-white w-10 h-10 rounded-full flex items-center justify-center shadow-lg hover:scale-105 transition-transform">
@@ -46,7 +43,7 @@ export default function AdminExperiences({ onNavigate }: AdminExperiencesProps) 
                   <MoreVertical size={20} />
                 </button>
               </div>
-
+              
               <div className="flex items-center justify-between pt-4 border-t border-[#f2f4f7]">
                 <div className="flex items-center gap-2 px-3 py-1.5 bg-[#f2f4f7] rounded-full">
                   <Calendar size={14} className="text-[#717680]" />

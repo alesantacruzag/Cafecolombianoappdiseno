@@ -4,9 +4,9 @@ import BottomNav from '../../components/BottomNav';
 import SearchDestinationModal from '../../components/SearchDestinationModal';
 import DatePickerModal from '../../components/DatePickerModal';
 import GuestPickerModal from '../../components/GuestPickerModal';
-import { Button } from '../../components/ui/button';
+import Button from '../../components/ui/Button';
 import Tag from '../../components/ui/Tag';
-import { Card } from '../../components/ui/card';
+import Card from '../../components/ui/Card';
 import { useApp } from '../../context/AppContext';
 import { LogoOrigen } from '../../components/LogoOrigen';
 import type { Screen } from '../../App';
@@ -21,7 +21,7 @@ export default function ExperiencesHome({ onNavigate, onSearch }: ExperiencesHom
   const [destination, setDestination] = useState('');
   const [dateRange, setDateRange] = useState<{ start: Date; end: Date } | null>(null);
   const [guests, setGuests] = useState({ adults: 1, children: 0 });
-
+  
   // Modal states
   const [showDestinationModal, setShowDestinationModal] = useState(false);
   const [showDateModal, setShowDateModal] = useState(false);
@@ -49,19 +49,19 @@ export default function ExperiencesHome({ onNavigate, onSearch }: ExperiencesHom
 
   return (
     <div className="relative w-full h-full bg-white flex flex-col">
-
+      
       {/* Header */}
       <div className="bg-white border-b border-[#e9eaeb] px-4 py-4">
         <div className="flex items-center justify-between">
           <LogoOrigen className="h-6" />
-
+          
           <button onClick={() => onNavigate('notifications')} className="relative p-1">
             <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24">
-              <path
-                d="M12 6.44V9.77M12.02 2C8.34 2 5.36 4.98 5.36 8.66V10.76C5.36 11.44 5.08 12.46 4.73 13.04L3.46 15.16C2.68 16.47 3.22 17.93 4.66 18.41C9.44 20 14.61 20 19.39 18.41C20.74 17.96 21.32 16.38 20.59 15.16L19.32 13.04C18.97 12.46 18.69 11.43 18.69 10.76V8.66C18.68 5 15.68 2 12.02 2ZM15.33 18.82C15.33 20.65 13.83 22.15 12 22.15C11.09 22.15 10.25 21.77 9.65 21.17C9.05 20.57 8.67 19.73 8.67 18.82"
-                stroke="black"
-                strokeWidth="2"
-                strokeMiterlimit="10"
+              <path 
+                d="M12 6.44V9.77M12.02 2C8.34 2 5.36 4.98 5.36 8.66V10.76C5.36 11.44 5.08 12.46 4.73 13.04L3.46 15.16C2.68 16.47 3.22 17.93 4.66 18.41C9.44 20 14.61 20 19.39 18.41C20.74 17.96 21.32 16.38 20.59 15.16L19.32 13.04C18.97 12.46 18.69 11.43 18.69 10.76V8.66C18.68 5 15.68 2 12.02 2ZM15.33 18.82C15.33 20.65 13.83 22.15 12 22.15C11.09 22.15 10.25 21.77 9.65 21.17C9.05 20.57 8.67 19.73 8.67 18.82" 
+                stroke="black" 
+                strokeWidth="2" 
+                strokeMiterlimit="10" 
                 strokeLinecap="round"
               />
             </svg>
@@ -97,16 +97,16 @@ export default function ExperiencesHome({ onNavigate, onSearch }: ExperiencesHom
               >
                 <div className="flex items-center gap-2 px-3.5 py-2.5 text-left">
                   <svg className="w-5 h-5 flex-shrink-0" fill="none" viewBox="0 0 20 20">
-                    <path
-                      d="M10 10.625C11.3807 10.625 12.5 9.50571 12.5 8.125C12.5 6.74429 11.3807 5.625 10 5.625C8.61929 5.625 7.5 6.74429 7.5 8.125C7.5 9.50571 8.61929 10.625 10 10.625Z"
-                      stroke="#717680"
-                      strokeWidth="1.67"
-                      strokeLinecap="round"
+                    <path 
+                      d="M10 10.625C11.3807 10.625 12.5 9.50571 12.5 8.125C12.5 6.74429 11.3807 5.625 10 5.625C8.61929 5.625 7.5 6.74429 7.5 8.125C7.5 9.50571 8.61929 10.625 10 10.625Z" 
+                      stroke="#717680" 
+                      strokeWidth="1.67" 
+                      strokeLinecap="round" 
                       strokeLinejoin="round"
                     />
-                    <path
-                      d="M3.01675 7.07499C4.65841 -0.141677 15.3501 -0.133343 16.9834 7.08332C17.9417 11.3167 15.3084 14.9 13.0001 17.1167C11.3251 18.7333 8.67508 18.7333 6.99175 17.1167C4.69175 14.9 2.05841 11.3083 3.01675 7.07499Z"
-                      stroke="#717680"
+                    <path 
+                      d="M3.01675 7.07499C4.65841 -0.141677 15.3501 -0.133343 16.9834 7.08332C17.9417 11.3167 15.3084 14.9 13.0001 17.1167C11.3251 18.7333 8.67508 18.7333 6.99175 17.1167C4.69175 14.9 2.05841 11.3083 3.01675 7.07499Z" 
+                      stroke="#717680" 
                       strokeWidth="1.67"
                     />
                   </svg>
@@ -128,19 +128,19 @@ export default function ExperiencesHome({ onNavigate, onSearch }: ExperiencesHom
               >
                 <div className="flex items-center gap-2 px-3.5 py-2.5 text-left">
                   <svg className="w-5 h-5 flex-shrink-0" fill="none" viewBox="0 0 20 20">
-                    <path
-                      d="M6.66667 1.66667V4.16667M13.3333 1.66667V4.16667M2.91667 7.575H17.0833M17.5 7.08333V14.1667C17.5 16.6667 16.25 18.3333 13.3333 18.3333H6.66667C3.75 18.3333 2.5 16.6667 2.5 14.1667V7.08333C2.5 4.58333 3.75 2.91667 6.66667 2.91667H13.3333C16.25 2.91667 17.5 4.58333 17.5 7.08333Z"
-                      stroke="#717680"
-                      strokeWidth="1.67"
-                      strokeMiterlimit="10"
-                      strokeLinecap="round"
+                    <path 
+                      d="M6.66667 1.66667V4.16667M13.3333 1.66667V4.16667M2.91667 7.575H17.0833M17.5 7.08333V14.1667C17.5 16.6667 16.25 18.3333 13.3333 18.3333H6.66667C3.75 18.3333 2.5 16.6667 2.5 14.1667V7.08333C2.5 4.58333 3.75 2.91667 6.66667 2.91667H13.3333C16.25 2.91667 17.5 4.58333 17.5 7.08333Z" 
+                      stroke="#717680" 
+                      strokeWidth="1.67" 
+                      strokeMiterlimit="10" 
+                      strokeLinecap="round" 
                       strokeLinejoin="round"
                     />
-                    <path
-                      d="M13.0791 11.4167H13.0866M13.0791 13.9167H13.0866M9.99579 11.4167H10.0033M9.99579 13.9167H10.0033M6.91162 11.4167H6.91912M6.91162 13.9167H6.91912"
-                      stroke="#717680"
-                      strokeWidth="1.67"
-                      strokeLinecap="round"
+                    <path 
+                      d="M13.0791 11.4167H13.0866M13.0791 13.9167H13.0866M9.99579 11.4167H10.0033M9.99579 13.9167H10.0033M6.91162 11.4167H6.91912M6.91162 13.9167H6.91912" 
+                      stroke="#717680" 
+                      strokeWidth="1.67" 
+                      strokeLinecap="round" 
                       strokeLinejoin="round"
                     />
                   </svg>
@@ -162,18 +162,18 @@ export default function ExperiencesHome({ onNavigate, onSearch }: ExperiencesHom
               >
                 <div className="flex items-center gap-2 px-3.5 py-2.5 text-left">
                   <svg className="w-5 h-5 flex-shrink-0" fill="none" viewBox="0 0 20 20">
-                    <path
-                      d="M10 10C12.3012 10 14.1667 8.13452 14.1667 5.83333C14.1667 3.53215 12.3012 1.66667 10 1.66667C7.69881 1.66667 5.83333 3.53215 5.83333 5.83333C5.83333 8.13452 7.69881 10 10 10Z"
-                      stroke="#717680"
-                      strokeWidth="1.67"
-                      strokeLinecap="round"
+                    <path 
+                      d="M10 10C12.3012 10 14.1667 8.13452 14.1667 5.83333C14.1667 3.53215 12.3012 1.66667 10 1.66667C7.69881 1.66667 5.83333 3.53215 5.83333 5.83333C5.83333 8.13452 7.69881 10 10 10Z" 
+                      stroke="#717680" 
+                      strokeWidth="1.67" 
+                      strokeLinecap="round" 
                       strokeLinejoin="round"
                     />
-                    <path
-                      d="M17.1583 18.3333C17.1583 15.1083 13.95 12.5 10 12.5C6.05 12.5 2.84167 15.1083 2.84167 18.3333"
-                      stroke="#717680"
-                      strokeWidth="1.67"
-                      strokeLinecap="round"
+                    <path 
+                      d="M17.1583 18.3333C17.1583 15.1083 13.95 12.5 10 12.5C6.05 12.5 2.84167 15.1083 2.84167 18.3333" 
+                      stroke="#717680" 
+                      strokeWidth="1.67" 
+                      strokeLinecap="round" 
                       strokeLinejoin="round"
                     />
                   </svg>
@@ -201,10 +201,10 @@ export default function ExperiencesHome({ onNavigate, onSearch }: ExperiencesHom
             <h2 className="font-['Poppins'] font-semibold text-[18px] leading-[28px] text-black">
               Te recomendamos visitar
             </h2>
-
-            <Card onClick={() => onSearch('Salento')}>
+            
+            <Card onClick={() => onSearch('Salento')} padding="none">
               <div className="h-[137px] relative">
-                <ImageWithFallback
+                <ImageWithFallback 
                   src="https://images.unsplash.com/photo-1567726843492-df0484bb0b05?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjb2ZmZWUlMjBmYXJtJTIwdG91ciUyMGd1aWRlfGVufDF8fHx8MTc3MDczMzE3N3ww&ixlib=rb-4.1.0&q=80&w=1080"
                   alt="Finca cafetera"
                   className="w-full h-full object-cover rounded-t-2xl"
@@ -229,7 +229,7 @@ export default function ExperiencesHome({ onNavigate, onSearch }: ExperiencesHom
       </div>
 
       <BottomNav activeTab="plans" onNavigate={onNavigate} />
-
+      
       {/* Modals */}
       <SearchDestinationModal
         isOpen={showDestinationModal}
@@ -237,13 +237,13 @@ export default function ExperiencesHome({ onNavigate, onSearch }: ExperiencesHom
         onSelect={(dest) => setDestination(dest)}
         currentValue={destination}
       />
-
+      
       <DatePickerModal
         isOpen={showDateModal}
         onClose={() => setShowDateModal(false)}
         onSelect={(start, end) => setDateRange({ start, end })}
       />
-
+      
       <GuestPickerModal
         isOpen={showGuestModal}
         onClose={() => setShowGuestModal(false)}

@@ -11,34 +11,24 @@ interface CartScreenProps {
 }
 
 export default function CartScreen({ onNavigate }: CartScreenProps) {
-  const { cart, updateCartItem, removeFromCart, clearCart, createOrder } = useApp();
+  const { cart, updateCartItem, removeFromCart, clearCart } = useApp();
   const [showProcessing, setShowProcessing] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
-
+  
   const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
   const shipping = 8000;
   const total = subtotal + shipping;
 
-  const handlePayment = async () => {
-    if (cart.length === 0) return;
-
+  const handlePayment = () => {
     // Mostrar modal de procesamiento
     setShowProcessing(true);
-
-    try {
-      console.log('Iniciando creación de pedido...', { items: cart.length, total });
-      // Crear el pedido en Supabase
-      await createOrder(cart, total);
-
-      console.log('Pedido creado con éxito');
+    
+    // Simular procesamiento de pago (2-3 segundos)
+    setTimeout(() => {
       setShowProcessing(false);
       // Mostrar modal de éxito
       setShowSuccess(true);
-    } catch (err: any) {
-      console.error('Error crítico al crear el pedido:', err);
-      setShowProcessing(false);
-      alert('Error al procesar el pedido: ' + (err.message || 'Error desconocido del servidor'));
-    }
+    }, 2500);
   };
 
   const handleSuccessClose = () => {
@@ -65,14 +55,14 @@ export default function CartScreen({ onNavigate }: CartScreenProps) {
   if (cart.length === 0) {
     return (
       <div className="relative w-full h-full bg-white flex flex-col">
-
+        
         <div className="bg-white border-b border-[#e9eaeb] px-4 py-4">
           <h1 className="font-['Poppins:SemiBold',sans-serif] text-[18px] text-black">Mi Carrito</h1>
         </div>
 
         <div className="flex-1 flex flex-col items-center justify-center px-8 text-center">
           <svg className="w-24 h-24 mb-4" fill="none" viewBox="0 0 24 24">
-            <path d="M2 2H3.74C4.82 2 5.67 2.93 5.58 4L4.75 13.96C4.61 15.59 5.89 16.99 7.53 16.99H18.19C19.63 16.99 20.89 15.81 21 14.38L21.54 6.88C21.66 5.22 20.4 3.87 18.73 3.87H5.82M16.25 22C16.9404 22 17.5 21.4404 17.5 20.75C17.5 20.0596 16.9404 19.5 16.25 19.5C15.5596 19.5 15 20.0596 15 20.75C15 21.4404 15.5596 22 16.25 22ZM8.25 22C8.94036 22 9.5 21.4404 9.5 20.75C9.5 20.0596 8.94036 19.5 8.25 19.5C7.55964 19.5 7 20.0596 7 20.75C7 21.4404 7.55964 22 8.25 22Z" stroke="#D5D7DA" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M2 2H3.74C4.82 2 5.67 2.93 5.58 4L4.75 13.96C4.61 15.59 5.89 16.99 7.53 16.99H18.19C19.63 16.99 20.89 15.81 21 14.38L21.54 6.88C21.66 5.22 20.4 3.87 18.73 3.87H5.82M16.25 22C16.9404 22 17.5 21.4404 17.5 20.75C17.5 20.0596 16.9404 19.5 16.25 19.5C15.5596 19.5 15 20.0596 15 20.75C15 21.4404 15.5596 22 16.25 22ZM8.25 22C8.94036 22 9.5 21.4404 9.5 20.75C9.5 20.0596 8.94036 19.5 8.25 19.5C7.55964 19.5 7 20.0596 7 20.75C7 21.4404 7.55964 22 8.25 22Z" stroke="#D5D7DA" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
           <h2 className="font-['Poppins:SemiBold',sans-serif] text-[20px] text-black mb-2">
             Tu carrito está vacío
@@ -95,7 +85,7 @@ export default function CartScreen({ onNavigate }: CartScreenProps) {
 
   return (
     <div className="relative w-full h-full bg-white flex flex-col">
-
+      
       <div className="bg-white border-b border-[#e9eaeb] px-4 py-4">
         <h1 className="font-['Poppins:SemiBold',sans-serif] text-[18px] text-black">
           Mi Carrito ({cart.length})
@@ -106,7 +96,7 @@ export default function CartScreen({ onNavigate }: CartScreenProps) {
         {cart.length === 0 ? (
           <div className="flex-1 flex flex-col items-center justify-center px-8 text-center">
             <svg className="w-24 h-24 mb-4" fill="none" viewBox="0 0 24 24">
-              <path d="M2 2H3.74C4.82 2 5.67 2.93 5.58 4L4.75 13.96C4.61 15.59 5.89 16.99 7.53 16.99H18.19C19.63 16.99 20.89 15.81 21 14.38L21.54 6.88C21.66 5.22 20.4 3.87 18.73 3.87H5.82M16.25 22C16.9404 22 17.5 21.4404 17.5 20.75C17.5 20.0596 16.9404 19.5 16.25 19.5C15.5596 19.5 15 20.0596 15 20.75C15 21.4404 15.5596 22 16.25 22ZM8.25 22C8.94036 22 9.5 21.4404 9.5 20.75C9.5 20.0596 8.94036 19.5 8.25 19.5C7.55964 19.5 7 20.0596 7 20.75C7 21.4404 7.55964 22 8.25 22Z" stroke="#D5D7DA" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+              <path d="M2 2H3.74C4.82 2 5.67 2.93 5.58 4L4.75 13.96C4.61 15.59 5.89 16.99 7.53 16.99H18.19C19.63 16.99 20.89 15.81 21 14.38L21.54 6.88C21.66 5.22 20.4 3.87 18.73 3.87H5.82M16.25 22C16.9404 22 17.5 21.4404 17.5 20.75C17.5 20.0596 16.9404 19.5 16.25 19.5C15.5596 19.5 15 20.0596 15 20.75C15 21.4404 15.5596 22 16.25 22ZM8.25 22C8.94036 22 9.5 21.4404 9.5 20.75C9.5 20.0596 8.94036 19.5 8.25 19.5C7.55964 19.5 7 20.0596 7 20.75C7 21.4404 7.55964 22 8.25 22Z" stroke="#D5D7DA" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
             <h2 className="font-['Poppins:SemiBold',sans-serif] text-[20px] text-black mb-2">
               Tu carrito está vacío
@@ -127,13 +117,13 @@ export default function CartScreen({ onNavigate }: CartScreenProps) {
               <div key={index} className="bg-white border border-[#e9eaeb] rounded-xl p-4">
                 <div className="flex gap-4">
                   <div className="w-20 h-20 flex-shrink-0 bg-[#f9f9f9] rounded-lg overflow-hidden">
-                    <ImageWithFallback
+                    <ImageWithFallback 
                       src={item.image}
                       alt={item.name}
                       className="w-full h-full object-contain"
                     />
                   </div>
-
+                  
                   <div className="flex-1">
                     <div className="flex justify-between items-start mb-2">
                       <div>
@@ -146,34 +136,34 @@ export default function CartScreen({ onNavigate }: CartScreenProps) {
                       </div>
                       <button onClick={() => removeFromCart(item.id)} className="p-1">
                         <svg className="w-5 h-5" fill="none" viewBox="0 0 20 20">
-                          <path d="M15 5L5 15M5 5L15 15" stroke="#717680" strokeWidth="1.67" strokeLinecap="round" strokeLinejoin="round" />
+                          <path d="M15 5L5 15M5 5L15 15" stroke="#717680" strokeWidth="1.67" strokeLinecap="round" strokeLinejoin="round"/>
                         </svg>
                       </button>
                     </div>
-
+                    
                     <div className="flex justify-between items-center">
                       <p className="font-['Poppins:SemiBold',sans-serif] text-[16px] text-black">
                         ${item.price.toLocaleString('es-CO')}
                       </p>
-
+                      
                       <div className="flex items-center gap-3 bg-[#f9f9f9] rounded-full px-3 py-1">
-                        <button
+                        <button 
                           onClick={() => updateCartItem(item.id, Math.max(1, item.quantity - 1))}
                           className="w-6 h-6 flex items-center justify-center"
                         >
                           <svg className="w-4 h-4" fill="none" viewBox="0 0 16 16">
-                            <path d="M3.33334 8H12.6667" stroke="black" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                            <path d="M3.33334 8H12.6667" stroke="black" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                           </svg>
                         </button>
                         <span className="font-['Poppins:SemiBold',sans-serif] text-[14px] text-black w-6 text-center">
                           {item.quantity}
                         </span>
-                        <button
+                        <button 
                           onClick={() => updateCartItem(item.id, item.quantity + 1)}
                           className="w-6 h-6 flex items-center justify-center"
                         >
                           <svg className="w-4 h-4" fill="none" viewBox="0 0 16 16">
-                            <path d="M8 3.33333V12.6667M3.33334 8H12.6667" stroke="black" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                            <path d="M8 3.33333V12.6667M3.33334 8H12.6667" stroke="black" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                           </svg>
                         </button>
                       </div>
@@ -209,7 +199,7 @@ export default function CartScreen({ onNavigate }: CartScreenProps) {
             </span>
           </div>
         </div>
-
+        
         <button
           onClick={handlePayment}
           className="w-full bg-[#f72585] border border-[#f72585] rounded-[32px] px-5 py-3 font-['Poppins:SemiBold',sans-serif] text-[16px] text-white"
@@ -219,10 +209,10 @@ export default function CartScreen({ onNavigate }: CartScreenProps) {
       </div>
 
       <BottomNav activeTab="cart" onNavigate={onNavigate} />
-
+      
       {/* Modales */}
       <ProcessingModal isOpen={showProcessing} type="order" />
-      <SuccessModal
+      <SuccessModal 
         isOpen={showSuccess}
         type="order"
         onClose={handleSuccessClose}

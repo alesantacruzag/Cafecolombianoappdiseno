@@ -1,6 +1,6 @@
 import { X } from 'lucide-react';
 import { useState } from 'react';
-import { Button } from './ui/button';
+import Button from './ui/Button';
 
 interface SortModalProps {
   isOpen: boolean;
@@ -9,7 +9,7 @@ interface SortModalProps {
   currentSort: SortOption;
 }
 
-export type SortOption =
+export type SortOption = 
   | 'relevant'
   | 'price-low-high'
   | 'price-high-low'
@@ -39,11 +39,11 @@ export default function SortModal({ isOpen, onClose, onApply, currentSort }: Sor
   return (
     <div className="fixed inset-0 z-50 flex items-end animate-fade-in">
       {/* Backdrop */}
-      <div
+      <div 
         className="absolute inset-0 bg-black/50"
         onClick={onClose}
       />
-
+      
       {/* Modal */}
       <div className="relative w-full bg-white rounded-t-[24px] animate-slide-up">
         {/* Header */}
@@ -51,7 +51,7 @@ export default function SortModal({ isOpen, onClose, onApply, currentSort }: Sor
           <h2 className="font-['Poppins:SemiBold',sans-serif] text-[18px] text-black">
             Ordenar
           </h2>
-          <button
+          <button 
             onClick={onClose}
             className="p-2 -mr-2"
           >
@@ -66,19 +66,20 @@ export default function SortModal({ isOpen, onClose, onApply, currentSort }: Sor
               <button
                 key={option.id}
                 onClick={() => setSelectedSort(option.id)}
-                className={`w-full px-4 py-3 rounded-xl border-2 text-left font-['Poppins:Medium',sans-serif] text-[14px] flex items-center justify-between transition-colors ${selectedSort === option.id
+                className={`w-full px-4 py-3 rounded-xl border-2 text-left font-['Poppins:Medium',sans-serif] text-[14px] flex items-center justify-between transition-colors ${
+                  selectedSort === option.id
                     ? 'bg-[#f72585] border-[#f72585] text-white'
                     : 'bg-white border-[#e9eaeb] text-black'
-                  }`}
+                }`}
               >
                 <span>{option.label}</span>
                 {selectedSort === option.id && (
                   <svg className="w-5 h-5" fill="none" viewBox="0 0 20 20">
-                    <path
-                      d="M16.6667 5L7.5 14.1667L3.33334 10"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
+                    <path 
+                      d="M16.6667 5L7.5 14.1667L3.33334 10" 
+                      stroke="currentColor" 
+                      strokeWidth="2" 
+                      strokeLinecap="round" 
                       strokeLinejoin="round"
                     />
                   </svg>

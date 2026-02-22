@@ -1,15 +1,15 @@
 import { useApp } from '../../context/AppContext';
 import BottomNav from '../../components/BottomNav';
 import type { Screen } from '../../App';
-import {
-  Package,
-  Ticket,
-  Heart,
-  MapPin,
-  CreditCard,
-  Bell,
-  HelpCircle,
-  Settings,
+import { 
+  Package, 
+  Ticket, 
+  Heart, 
+  MapPin, 
+  CreditCard, 
+  Bell, 
+  HelpCircle, 
+  Settings, 
   ChevronRight,
   ShoppingBag,
   Award,
@@ -21,7 +21,7 @@ interface ProfileScreenProps {
 }
 
 export default function ProfileScreen({ onNavigate }: ProfileScreenProps) {
-  const { user, setUser, bookings, orders } = useApp();
+  const { user, setUser, bookings } = useApp();
 
   const handleLogout = () => {
     setUser(null);
@@ -29,14 +29,14 @@ export default function ProfileScreen({ onNavigate }: ProfileScreenProps) {
   };
 
   const menuItems = [
-    { icon: <Package size={20} />, label: 'Mis pedidos', count: orders.length, action: () => onNavigate('orders') },
+    { icon: <Package size={20} />, label: 'Mis pedidos', count: 3, action: () => onNavigate('orders') },
     { icon: <Ticket size={20} />, label: 'Mis reservas', count: bookings.length, action: () => onNavigate('bookings') },
-    { icon: <Heart size={20} />, label: 'Favoritos', count: 5, action: () => { } },
-    { icon: <MapPin size={20} />, label: 'Direcciones guardadas', action: () => { } },
-    { icon: <CreditCard size={20} />, label: 'Métodos de pago', action: () => { } },
-    { icon: <Bell size={20} />, label: 'Notificaciones', action: () => { } },
-    { icon: <HelpCircle size={20} />, label: 'Ayuda y soporte', action: () => { } },
-    { icon: <Settings size={20} />, label: 'Configuración', action: () => { } }
+    { icon: <Heart size={20} />, label: 'Favoritos', count: 5, action: () => {} },
+    { icon: <MapPin size={20} />, label: 'Direcciones guardadas', action: () => {} },
+    { icon: <CreditCard size={20} />, label: 'Métodos de pago', action: () => {} },
+    { icon: <Bell size={20} />, label: 'Notificaciones', action: () => {} },
+    { icon: <HelpCircle size={20} />, label: 'Ayuda y soporte', action: () => {} },
+    { icon: <Settings size={20} />, label: 'Configuración', action: () => {} }
   ];
 
   const stats = [
@@ -46,7 +46,7 @@ export default function ProfileScreen({ onNavigate }: ProfileScreenProps) {
 
   return (
     <div className="relative w-full h-full bg-[#f9fafb] flex flex-col">
-
+      
       {/* Header */}
       <div className="bg-white px-4 py-5 flex items-center justify-between border-b border-[#e9eaeb]">
         <h1 className="font-['Poppins:SemiBold',sans-serif] text-[20px] text-[#181d27]">Mi Cuenta</h1>
@@ -75,9 +75,9 @@ export default function ProfileScreen({ onNavigate }: ProfileScreenProps) {
           <div className="grid grid-cols-2 gap-3">
             {stats.map((stat, index) => (
               <div key={index} className="bg-white border border-[#e9eaeb] rounded-[16px] p-4 flex flex-col items-center text-center shadow-sm">
-                <div
-                  className="w-10 h-10 rounded-full mb-3 flex items-center justify-center"
-                  style={{ backgroundColor: `${stat.color}15`, color: stat.color }}
+                <div 
+                  className="w-10 h-10 rounded-full mb-3 flex items-center justify-center" 
+                  style={{ backgroundColor: `${stat.color}15`, color: stat.color }} 
                 >
                   {stat.icon}
                 </div>
@@ -98,8 +98,9 @@ export default function ProfileScreen({ onNavigate }: ProfileScreenProps) {
                 <button
                   key={index}
                   onClick={item.action}
-                  className={`w-full flex items-center justify-between p-4 hover:bg-[#f9fafb] transition-colors ${index !== menuItems.length - 1 ? 'border-b border-[#f2f4f7]' : ''
-                    }`}
+                  className={`w-full flex items-center justify-between p-4 hover:bg-[#f9fafb] transition-colors ${
+                    index !== menuItems.length - 1 ? 'border-b border-[#f2f4f7]' : ''
+                  }`}
                 >
                   <div className="flex items-center gap-4">
                     <div className="w-10 h-10 bg-[#fef2f8] text-[#f72585] rounded-xl flex items-center justify-center">
@@ -119,7 +120,7 @@ export default function ProfileScreen({ onNavigate }: ProfileScreenProps) {
               ))}
             </div>
           </div>
-
+          
           <div className="pb-8">
             <button
               onClick={handleLogout}
