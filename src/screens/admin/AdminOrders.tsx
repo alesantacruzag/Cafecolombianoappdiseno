@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import BottomNav from '../../components/BottomNav';
 import type { Screen } from '../../App';
 import { useApp, type Order, type ExperienceBooking } from '../../context/AppContext';
@@ -12,8 +12,13 @@ type Tab = 'orders' | 'bookings';
 type ModalType = 'order-detail' | 'booking-detail' | null;
 
 export default function AdminOrders({ onNavigate }: AdminOrdersProps) {
-  const { orders, updateOrderStatus, experienceBookings, updateBookingStatus } = useApp();
+  const { orders, updateOrderStatus, experienceBookings, updateBookingStatus, refreshOrders, refreshBookings } = useApp();
   const [activeTab, setActiveTab] = useState<Tab>('orders');
+
+  useMemo(() => {
+    refreshOrders();
+    refreshBookings();
+  }, []);
   const [modalType, setModalType] = useState<ModalType>(null);
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
   const [selectedBooking, setSelectedBooking] = useState<ExperienceBooking | null>(null);
@@ -86,7 +91,7 @@ export default function AdminOrders({ onNavigate }: AdminOrdersProps) {
 
   return (
     <div className="relative w-full h-full bg-[#f9fafb] flex flex-col">
-      
+
       {/* Header */}
       <div className="bg-white border-b border-[#e9eaeb] shadow-sm">
         <div className="px-4 py-4 flex items-center justify-between">
@@ -97,9 +102,8 @@ export default function AdminOrders({ onNavigate }: AdminOrdersProps) {
         <div className="flex px-4">
           <button
             onClick={() => setActiveTab('orders')}
-            className={`flex-1 pb-4 font-['Poppins:SemiBold',sans-serif] text-[15px] transition-colors relative ${
-              activeTab === 'orders' ? 'text-[#f72585]' : 'text-[#717680]'
-            }`}
+            className={`flex-1 pb-4 font-['Poppins:SemiBold',sans-serif] text-[15px] transition-colors relative ${activeTab === 'orders' ? 'text-[#f72585]' : 'text-[#717680]'
+              }`}
           >
             <div className="flex items-center justify-center gap-2">
               <ShoppingBag size={18} />
@@ -110,12 +114,11 @@ export default function AdminOrders({ onNavigate }: AdminOrdersProps) {
               <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#f72585]" />
             )}
           </button>
-          
+
           <button
             onClick={() => setActiveTab('bookings')}
-            className={`flex-1 pb-4 font-['Poppins:SemiBold',sans-serif] text-[15px] transition-colors relative ${
-              activeTab === 'bookings' ? 'text-[#f72585]' : 'text-[#717680]'
-            }`}
+            className={`flex-1 pb-4 font-['Poppins:SemiBold',sans-serif] text-[15px] transition-colors relative ${activeTab === 'bookings' ? 'text-[#f72585]' : 'text-[#717680]'
+              }`}
           >
             <div className="flex items-center justify-center gap-2">
               <Ticket size={18} />
@@ -168,7 +171,7 @@ export default function AdminOrders({ onNavigate }: AdminOrdersProps) {
                         {getOrderStatusText(order.status)}
                         <ChevronDown size={14} />
                       </button>
-                      
+
                       {/* Status Dropdown */}
                       {showStatusDropdown === order.id && (
                         <div className="absolute right-0 top-full mt-2 bg-white border border-[#e9eaeb] rounded-2xl shadow-lg overflow-hidden z-10 min-w-[140px]">
@@ -176,9 +179,8 @@ export default function AdminOrders({ onNavigate }: AdminOrdersProps) {
                             <button
                               key={status}
                               onClick={() => handleOrderStatusChange(order.id, status)}
-                              className={`w-full px-4 py-2.5 text-left font-['Poppins:Medium',sans-serif] text-[13px] transition-colors ${
-                                order.status === status ? 'bg-[#fef2f8] text-[#f72585]' : 'text-[#344054] hover:bg-[#f9fafb]'
-                              }`}
+                              className={`w-full px-4 py-2.5 text-left font-['Poppins:Medium',sans-serif] text-[13px] transition-colors ${order.status === status ? 'bg-[#fef2f8] text-[#f72585]' : 'text-[#344054] hover:bg-[#f9fafb]'
+                                }`}
                             >
                               {getOrderStatusText(status)}
                             </button>
@@ -187,12 +189,12 @@ export default function AdminOrders({ onNavigate }: AdminOrdersProps) {
                       )}
                     </div>
                   </div>
-                  
+
                   <div className="flex items-center justify-between pt-4 border-t border-[#f2f4f7]">
                     <p className="font-['Poppins:SemiBold',sans-serif] text-[18px] text-[#181d27]">
                       ${order.total.toLocaleString('es-CO')}
                     </p>
-                    <button 
+                    <button
                       onClick={() => openOrderDetail(order)}
                       className="px-4 py-2 bg-[#f9fafb] border border-[#e9eaeb] rounded-xl text-[13px] font-['Poppins:SemiBold',sans-serif] text-[#344054] hover:bg-[#f2f4f7] transition-colors"
                     >
@@ -251,7 +253,7 @@ export default function AdminOrders({ onNavigate }: AdminOrdersProps) {
                         {getBookingStatusText(booking.status)}
                         <ChevronDown size={14} />
                       </button>
-                      
+
                       {/* Status Dropdown */}
                       {showStatusDropdown === booking.id && (
                         <div className="absolute right-0 top-full mt-2 bg-white border border-[#e9eaeb] rounded-2xl shadow-lg overflow-hidden z-10 min-w-[140px]">
@@ -259,9 +261,8 @@ export default function AdminOrders({ onNavigate }: AdminOrdersProps) {
                             <button
                               key={status}
                               onClick={() => handleBookingStatusChange(booking.id, status)}
-                              className={`w-full px-4 py-2.5 text-left font-['Poppins:Medium',sans-serif] text-[13px] transition-colors ${
-                                booking.status === status ? 'bg-[#fef2f8] text-[#f72585]' : 'text-[#344054] hover:bg-[#f9fafb]'
-                              }`}
+                              className={`w-full px-4 py-2.5 text-left font-['Poppins:Medium',sans-serif] text-[13px] transition-colors ${booking.status === status ? 'bg-[#fef2f8] text-[#f72585]' : 'text-[#344054] hover:bg-[#f9fafb]'
+                                }`}
                             >
                               {getBookingStatusText(status)}
                             </button>
@@ -270,12 +271,12 @@ export default function AdminOrders({ onNavigate }: AdminOrdersProps) {
                       )}
                     </div>
                   </div>
-                  
+
                   <div className="flex items-center justify-between pt-4 border-t border-[#f2f4f7]">
                     <p className="font-['Poppins:SemiBold',sans-serif] text-[18px] text-[#181d27]">
                       ${booking.total.toLocaleString('es-CO')}
                     </p>
-                    <button 
+                    <button
                       onClick={() => openBookingDetail(booking)}
                       className="px-4 py-2 bg-[#f9fafb] border border-[#e9eaeb] rounded-xl text-[13px] font-['Poppins:SemiBold',sans-serif] text-[#344054] hover:bg-[#f2f4f7] transition-colors"
                     >
@@ -441,7 +442,7 @@ export default function AdminOrders({ onNavigate }: AdminOrdersProps) {
                     <span className="font-['Poppins:Regular',sans-serif] text-[13px]">{selectedBooking.visitors} {selectedBooking.visitors === 1 ? 'persona' : 'personas'}</span>
                   </div>
                   <div className="pt-2 border-t border-[#e9eaeb]">
-                    <span className="font-['Poppins:Regular',sans-serif] text-[12px] text-[#717680]">Fecha de reserva: {selectedBooking.bookingDate}</span>
+                    <span className="font-['Poppins:Regular',sans-serif] text-[12px] text-[#717680]">Reserva confirmada</span>
                   </div>
                 </div>
               </div>

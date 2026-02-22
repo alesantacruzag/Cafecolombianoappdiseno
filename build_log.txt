@@ -1,0 +1,31 @@
+
+> Cafe╠ü Colombiano App Disen╠âo@0.1.0 build
+> vite build
+
+[36mvite v6.3.5 [32mbuilding for production...[36m[39m
+transforming...
+[32mÔ£ô[39m 12 modules transformed.
+Ô£ù Build failed in 133ms
+error during build:
+[vite:esbuild] Transform failed with 1 error:
+C:/Users/ASUS VIVOBOOK PRO/OneDrive/Desktop/Coderhouse/Cafecolombianoappdiseno/src/screens/buyer/OrdersScreen.tsx:147:11: ERROR: Unterminated regular expression
+file: C:/Users/ASUS VIVOBOOK PRO/OneDrive/Desktop/Coderhouse/Cafecolombianoappdiseno/src/screens/buyer/OrdersScreen.tsx:147:11
+
+Unterminated regular expression
+145|  
+146|  <BottomNav activeTab="profile" onNavigate={onNavigate} />
+147|      </div >
+   |             ^
+148|    );
+149|  }
+
+    at failureErrorWithLog (C:\Users\ASUS VIVOBOOK PRO\OneDrive\Desktop\Coderhouse\Cafecolombianoappdiseno\node_modules\esbuild\lib\main.js:1467:15)
+    at C:\Users\ASUS VIVOBOOK PRO\OneDrive\Desktop\Coderhouse\Cafecolombianoappdiseno\node_modules\esbuild\lib\main.js:736:50
+    at responseCallbacks.<computed> (C:\Users\ASUS VIVOBOOK PRO\OneDrive\Desktop\Coderhouse\Cafecolombianoappdiseno\node_modules\esbuild\lib\main.js:603:9)
+    at handleIncomingPacket (C:\Users\ASUS VIVOBOOK PRO\OneDrive\Desktop\Coderhouse\Cafecolombianoappdiseno\node_modules\esbuild\lib\main.js:658:12)
+    at Socket.readFromStdout (C:\Users\ASUS VIVOBOOK PRO\OneDrive\Desktop\Coderhouse\Cafecolombianoappdiseno\node_modules\esbuild\lib\main.js:581:7)
+    at Socket.emit (node:events:508:28)
+    at addChunk (node:internal/streams/readable:559:12)
+    at readableAddChunkPushByteMode (node:internal/streams/readable:510:3)
+    at Readable.push (node:internal/streams/readable:390:5)
+    at Pipe.onStreamRead (node:internal/stream_base_commons:189:23)

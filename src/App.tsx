@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { AppProvider } from './context/AppContext';
+import { AppProvider, useApp } from './context/AppContext';
 import SplashScreen from './screens/SplashScreen';
 import OnboardingScreen from './screens/OnboardingScreen';
 import AuthScreen from './screens/AuthScreen';
@@ -22,7 +22,7 @@ import AdminOrders from './screens/admin/AdminOrders';
 import AdminProfile from './screens/admin/AdminProfile';
 import PWAInstaller from './components/PWAInstaller';
 
-export type Screen = 
+export type Screen =
   | 'splash'
   | 'onboarding'
   | 'auth'
@@ -32,6 +32,7 @@ export type Screen =
   | 'experiences-home'
   | 'experiences-list'
   | 'experience-detail'
+  | 'experiences' // Alias for experiences-home
   | 'cart'
   | 'checkout'
   | 'profile'
@@ -48,7 +49,9 @@ export default function App() {
   const [currentScreen, setCurrentScreen] = useState<Screen>('splash');
   const [selectedProduct, setSelectedProduct] = useState<any>(null);
   const [selectedExperience, setSelectedExperience] = useState<any>(null);
-  const [searchDestination, setSearchDestination] = useState<string>(''); // Estado para el destino seleccionado
+  const [searchDestination, setSearchDestination] = useState<string>('');
+
+  const { user, loading } = useApp();
 
   // Configure meta tags for iOS fullscreen
   useEffect(() => {
@@ -98,13 +101,30 @@ export default function App() {
     appleTitle.setAttribute('content', 'Origen');
   }, []);
 
+
   useEffect(() => {
-    // Simulate splash screen delay
-    const timer = setTimeout(() => {
-      setCurrentScreen('onboarding');
-    }, 2500);
-    return () => clearTimeout(timer);
-  }, []);
+    console.log('App State:', { currentScreen, loading, userRole: user?.role });
+
+    // Auto-navigate if user is logged in but stuck on splash or auth
+    if (!loading && user) {
+      const authScreens: string[] = ['splash', 'auth', 'onboarding'];
+      if (authScreens.includes(currentScreen as string)) {
+        const target: Screen = user.role === 'admin' ? 'admin-dashboard' : 'buyer-home';
+        console.log('Auto-navigating to:', target);
+        setCurrentScreen(target);
+      }
+    }
+
+    // Simulate splash screen delay for unauthenticated users
+    if (currentScreen === 'splash') {
+      const timer = setTimeout(() => {
+        if (!loading && !user) {
+          setCurrentScreen('onboarding');
+        }
+      }, 2500);
+      return () => clearTimeout(timer);
+    }
+  }, [user, loading, currentScreen]);
 
   const renderScreen = () => {
     switch (currentScreen) {
@@ -117,103 +137,80 @@ export default function App() {
           setCurrentScreen(role === 'buyer' ? 'buyer-home' : 'admin-dashboard');
         }} />;
       case 'buyer-home':
-        return <NewHome 
-          onNavigate={(screen) => setCurrentScreen(screen)}
+        return <NewHome
+          onNavigate={(screen) => setCurrentScreen(screen as Screen)}
           onProductSelect={(product) => {
             setSelectedProduct(product);
             setCurrentScreen('product-detail');
           }}
         />;
       case 'shop':
-        return <ShopScreen 
-          onNavigate={(screen) => setCurrentScreen(screen)}
+        return <ShopScreen
+          onNavigate={(screen) => setCurrentScreen(screen as Screen)}
           onProductSelect={(product) => {
             setSelectedProduct(product);
             setCurrentScreen('product-detail');
           }}
         />;
       case 'product-detail':
-        return <ProductDetail 
+        return <ProductDetail
           product={selectedProduct}
-          onNavigate={(screen) => setCurrentScreen(screen)}
+          onNavigate={(screen) => setCurrentScreen(screen as Screen)}
         />;
       case 'experiences-home':
-        return <ExperiencesHome 
-          onNavigate={(screen) => setCurrentScreen(screen)}
-          onSearch={(destination) => {
-            setSearchDestination(destination);
+      case 'experiences':
+        return <ExperiencesHome
+          onNavigate={(screen) => setCurrentScreen(screen as Screen)}
+          onSearch={(dest) => {
+            setSearchDestination(dest);
             setCurrentScreen('experiences-list');
           }}
         />;
       case 'experiences-list':
-        return <ExperiencesList 
+        return <ExperiencesList
           destination={searchDestination}
-          onNavigate={(screen) => setCurrentScreen(screen)}
-          onExperienceSelect={(experience) => {
-            setSelectedExperience(experience);
+          onNavigate={(screen) => setCurrentScreen(screen as Screen)}
+          onExperienceSelect={(exp) => {
+            setSelectedExperience(exp);
             setCurrentScreen('experience-detail');
           }}
         />;
       case 'experience-detail':
-        return <ExperienceDetail 
+        return <ExperienceDetail
           experience={selectedExperience}
-          onNavigate={(screen) => setCurrentScreen(screen)}
+          onNavigate={(screen) => setCurrentScreen(screen as Screen)}
         />;
       case 'cart':
-        return <CartScreen 
-          onNavigate={(screen) => setCurrentScreen(screen)}
-        />;
+        return <CartScreen onNavigate={(screen) => setCurrentScreen(screen as Screen)} />;
       case 'checkout':
-        return <CheckoutScreen 
-          onNavigate={(screen) => setCurrentScreen(screen)}
-        />;
+        return <CheckoutScreen onNavigate={(screen) => setCurrentScreen(screen as Screen)} />;
       case 'profile':
-        return <ProfileScreen 
-          onNavigate={(screen) => setCurrentScreen(screen)}
-        />;
+        return <ProfileScreen onNavigate={(screen) => setCurrentScreen(screen as Screen)} />;
       case 'orders':
-        return <OrdersScreen 
-          onNavigate={(screen) => setCurrentScreen(screen)}
-        />;
+        return <OrdersScreen onNavigate={(screen) => setCurrentScreen(screen as Screen)} />;
       case 'bookings':
-        return <BookingsScreen 
-          onNavigate={(screen) => setCurrentScreen(screen)}
-        />;
+        return <BookingsScreen onNavigate={(screen) => setCurrentScreen(screen as Screen)} />;
       case 'notifications':
-        return <NotificationsScreen 
-          onNavigate={(screen) => setCurrentScreen(screen)}
-        />;
+        return <NotificationsScreen onNavigate={(screen) => setCurrentScreen(screen as Screen)} />;
       case 'admin-dashboard':
-        return <AdminDashboard 
-          onNavigate={(screen) => setCurrentScreen(screen)}
-        />;
+        return <AdminDashboard onNavigate={(screen) => setCurrentScreen(screen as Screen)} />;
       case 'admin-products':
-        return <AdminProducts 
-          onNavigate={(screen) => setCurrentScreen(screen)}
-        />;
+        return <AdminProducts onNavigate={(screen) => setCurrentScreen(screen as Screen)} />;
       case 'admin-experiences':
-        return <AdminExperiences 
-          onNavigate={(screen) => setCurrentScreen(screen)}
-        />;
+        return <AdminExperiences onNavigate={(screen) => setCurrentScreen(screen as Screen)} />;
       case 'admin-orders':
-        return <AdminOrders 
-          onNavigate={(screen) => setCurrentScreen(screen)}
-        />;
+        return <AdminOrders onNavigate={(screen) => setCurrentScreen(screen as Screen)} />;
       case 'admin-profile':
-        return <AdminProfile 
-          onNavigate={(screen) => setCurrentScreen(screen)}
-        />;
+        return <AdminProfile onNavigate={(screen) => setCurrentScreen(screen as Screen)} />;
       default:
         return <SplashScreen />;
     }
   };
 
   return (
-    <AppProvider>
-      <div className="relative w-full h-[100dvh] bg-white overflow-hidden">
-        {renderScreen()}
-        <PWAInstaller />
-      </div>
-    </AppProvider>
+    <div className="relative w-full h-[100dvh] bg-white overflow-hidden max-w-[430px] mx-auto shadow-2xl border-x border-gray-100 flex flex-col">
+      {renderScreen()}
+      <PWAInstaller />
+    </div>
   );
 }

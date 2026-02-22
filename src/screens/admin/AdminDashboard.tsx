@@ -6,12 +6,27 @@ interface AdminDashboardProps {
   onNavigate: (screen: Screen) => void;
 }
 
+import { useMemo } from 'react';
+import { useApp } from '../../context/AppContext';
+
 export default function AdminDashboard({ onNavigate }: AdminDashboardProps) {
+  const { orders, products, experienceBookings, refreshOrders, refreshProducts, refreshBookings } = useApp();
+
+  useMemo(() => {
+    refreshOrders();
+    refreshProducts();
+    refreshBookings();
+  }, []);
+
+  const today = new Date().toISOString().split('T')[0];
+  const todayOrders = orders.filter(o => o.date === today);
+  const totalSalesToday = todayOrders.reduce((sum, o) => sum + o.total, 0);
+
   const stats = [
-    { label: 'Ventas hoy', value: '$485.000', change: '+12%', positive: true },
-    { label: 'Pedidos', value: '23', change: '+5', positive: true },
-    { label: 'Reservas', value: '12', change: '+3', positive: true },
-    { label: 'Productos', value: '45', change: '2 agotados', positive: false }
+    { label: 'Ventas hoy', value: `$${totalSalesToday.toLocaleString('es-CO')}`, change: '+12%', positive: true },
+    { label: 'Pedidos', value: orders.length.toString(), change: '+5', positive: true },
+    { label: 'Reservas', value: experienceBookings.length.toString(), change: '+3', positive: true },
+    { label: 'Productos', value: products.length.toString(), change: `${products.filter(p => p.stock === 0).length} agotados`, positive: false }
   ];
 
   const quickActions = [
@@ -21,16 +36,23 @@ export default function AdminDashboard({ onNavigate }: AdminDashboardProps) {
     { icon: '📊', label: 'Reportes', screen: 'admin-dashboard' as Screen }
   ];
 
+  const recentActivity = orders.slice(0, 3).map(o => ({
+    type: 'order',
+    text: `Pedido de ${o.customer}`,
+    time: 'Reciente',
+    amount: `$${o.total.toLocaleString('es-CO')}`
+  }));
+
   return (
     <div className="relative w-full h-full bg-[#f9fafb] flex flex-col">
-      
+
       <div className="bg-[#f72585] px-4 py-8 text-white rounded-b-[32px] shadow-lg">
         <div className="flex items-center justify-between mb-4">
           <div>
             <h1 className="font-['Poppins:SemiBold',sans-serif] text-[26px]">Dashboard</h1>
             <p className="font-['Poppins:Regular',sans-serif] text-[15px] text-white/80">Bienvenido, Caficultor</p>
           </div>
-          <button 
+          <button
             onClick={() => onNavigate('admin-profile')}
             className="w-12 h-12 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center hover:bg-white/30 transition-all border border-white/20"
           >
@@ -47,9 +69,8 @@ export default function AdminDashboard({ onNavigate }: AdminDashboardProps) {
               <div key={index} className="bg-white border border-[#e9eaeb] rounded-2xl p-4 shadow-sm">
                 <p className="font-['Poppins:Medium',sans-serif] text-[13px] text-[#717680] mb-2 uppercase tracking-tighter">{stat.label}</p>
                 <p className="font-['Poppins:SemiBold',sans-serif] text-[22px] text-[#181d27] mb-2">{stat.value}</p>
-                <div className={`inline-flex px-2 py-0.5 rounded-full text-[11px] font-['Poppins:SemiBold',sans-serif] ${
-                  stat.positive ? 'bg-green-50 text-green-600' : 'bg-orange-50 text-orange-600'
-                }`}>
+                <div className={`inline-flex px-2 py-0.5 rounded-full text-[11px] font-['Poppins:SemiBold',sans-serif] ${stat.positive ? 'bg-green-50 text-green-600' : 'bg-orange-50 text-orange-600'
+                  }`}>
                   {stat.change}
                 </div>
               </div>

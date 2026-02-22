@@ -1,5 +1,5 @@
 import { motion } from 'motion/react';
-import Button from '../ui/Button';
+import { Button } from '../ui/button';
 import { CheckCircle, Calendar, MapPin, Users, Clock } from 'lucide-react';
 
 interface BookingConfirmationModalProps {
@@ -14,9 +14,9 @@ interface BookingConfirmationModalProps {
   total: number;
 }
 
-export default function BookingConfirmationModal({ 
-  isOpen, 
-  onClose, 
+export default function BookingConfirmationModal({
+  isOpen,
+  onClose,
   bookingNumber,
   experienceName,
   date,
