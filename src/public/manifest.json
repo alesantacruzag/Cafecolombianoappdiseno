@@ -1,0 +1,30 @@
+{
+  "name": "Origen - Café Colombiano de Especialidad",
+  "short_name": "Origen",
+  "description": "Descubre el mejor café colombiano de especialidad y reserva experiencias turísticas únicas",
+  "start_url": "/",
+  "display": "fullscreen",
+  "display_override": ["fullscreen", "standalone"],
+  "background_color": "#ffffff",
+  "theme_color": "#f72585",
+  "orientation": "portrait",
+  "scope": "/",
+  "prefer_related_applications": false,
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["shopping", "food", "travel"],
+  "lang": "es-CO",
+  "dir": "ltr"
+}
